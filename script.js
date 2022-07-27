@@ -8,19 +8,65 @@ about where the shuttle is headed.
 */
 window.addEventListener("load", function(){
    let form = document.getElementById("launchForm");
-   form.addEventListener("submit", function(event){
-      let pilotInput = document.querySelector("input[name=pilotName]");
-      let copilotInput = document.querySelector("input[name=copilotName]");
-      let fuelLevelInput = document.querySelector("input[name=fuelLevel]");
-      let cargoMassInput = document.querySelector("input[name=cargoMass]");
 
-      if(pilotInput.value === ""|| copilotInput.value === ""||fuelLevelInput.value === ""|| cargoMassInput.value ===""){
-         alert("All fields are required!")
-         event.preventDefault();
-      }
+   let pilotInput = document.getElementById('pilotName');
+   let copilotInput = document.getElementById('copilotName');
+   let fuelLevelInput = document.getElementById("fuelLevel");
+   let cargoMassInput = document.getElementById("cargoMass");
+   
+   let pilotStatus = document.getElementById('pilotStatus');
+   let copilotStatus = document.getElementById('copilotStatus');
+   let fuelStatus = document.getElementById('fuelStatus');
+   let cargoStatus = document.getElementById('cargoStatus');
+
+   // validate number for fuel level and cargo mass input field
+   function validateNumber(number) {
+      return !isNaN(parseFloat(number) && isFinite(number));
+  }
+
+
+  form.addEventListener("submit", (event) => {
+
+   //alert for incase input field is left empty
+    if(pilotInput.value === ''|| copilotInput.value === '' || fuelLevelInput.value === ''|| cargoMassInput.value === ''){
+       alert("All fields are required!")
+       event.preventDefault();
+
+   //alert for incase input field for fuel level is not a number
+
+    }else if(!validateNumber(fuelLevelInput.value)){
+       alert("Fuel Level must be a number")
+       event.preventDefault();
+
+   //alert for incase input field for fuel level is not a number
+
+    }else if(!validateNumber(cargoMassInput.value)){
+       alert("Cargo Mass must be a number")
+       event.preventDefault();
+    }  
+
+      pilotStatus.innerHTML = pilotInput.value
+      copilotStatus.innerHTML = copilotInput.value
+
+      if(fuelLevelInput.value < 10000){
+         fuelStatus.style.color= "red";
+         fuelStatus.innerHTML = `NOT ENOUGH FUEL FOR SHUTTLE TO TAKE OFF!`;
+      }else {fuelStatus.innerHTML = `Fuel Level Check: Passed`;
+      fuelStatus.style.color = "inherit"}
+
+      if(cargoMassInput.value > 10000){
+         cargoStatus.style.color= "red";
+         cargoStatus.innerHTML = `TOO MUCH MASS FOR SHUTTLE TO TAKE OFF!`;
+      }else {cargoStatus.innerHTML = `Cargo Mass Check: Passed`;
+      cargoStatus.style.color = "inherit"}
+
+      
+         
+   event.preventDefault();
+   
+         
    });
 });
-
 
 
 

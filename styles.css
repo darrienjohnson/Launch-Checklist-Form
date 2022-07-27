@@ -7,7 +7,7 @@ div {
 }
 
 #itemStatus {
-    visibility: hidden;   
+    visibility: visible;   
 }
 
 #launchForm {
