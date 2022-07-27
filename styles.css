@@ -9,6 +9,11 @@ div {
 #itemStatus {
     visibility: visible;   
 }
+.buttonContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 #launchForm {
     background-color: #ECF0F1;

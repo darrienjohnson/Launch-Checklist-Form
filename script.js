@@ -11,30 +11,36 @@ window.addEventListener("load", function(){
    let fuelStatus = document.getElementById('fuelStatus');
    let cargoStatus = document.getElementById('cargoStatus');
    let launchStatus = document.getElementById('launchStatus');
-   
 
+   //button to generate a random planet
+   let randomPlanetButton = document.getElementById('planetButton')
+   
+   
    // validate number for fuel level and cargo mass input field
    function validateNumber(number) {
       return !isNaN(parseFloat(number) && isFinite(number));
-  }
-
-//Planetary JSON Fetch
-fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response){
-    response.json().then(function(data){
-        const missionTarget = document.getElementById("missionTarget");
-        missionTarget.innerHTML = `
-         <h2>Mission Destination</h2>
-         <ul>
-            <li>Name: ${data[0].name}</li>
-            <li>Diameter: ${data[0].diameter}</li>
-            <li>Star: ${data[0].star}</li>
-            <li>Distance: ${data[0].distance}</li>
-            <li>Number of Moons: ${data[0].moons}</li>
-         </ul>
-         <img src="${data[0].image}">
-        `
-    });    
+   }
+   
+   //Planetary JSON Fetch
+   fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response){
+      response.json().then(function(data){
+         const missionTarget = document.getElementById("missionTarget");
+         randomPlanetButton.addEventListener("click", ()=>{
+            let random = data[Math.floor(Math.random()*data.length)]
+            missionTarget.innerHTML = `
+             <h2>Mission Destination</h2>
+             <ul>
+                <li>Name: ${random.name}</li>
+                <li>Diameter: ${random.diameter}</li>
+                <li>Star: ${random.star}</li>
+                <li>Distance: ${random.distance}</li>
+                <li>Number of Moons: ${random.moons}</li>
+             </ul>
+             <img src="${random.image}">
+            `
+     });    
     });
+  });
 
 
   form.addEventListener("submit", (event) => {
@@ -57,8 +63,8 @@ fetch("https://handlers.education.launchcode.org/static/planets.json").then(func
        event.preventDefault();
     }  
 
-      pilotStatus.innerHTML = pilotInput.value
-      copilotStatus.innerHTML = copilotInput.value
+      pilotStatus.innerHTML = `${pilotInput.value} is ready for launch`
+      copilotStatus.innerHTML = `${copilotInput.value} is ready for launch`
     //If shuttle fuel too low display a red warning
       if(fuelLevelInput.value < 10000){
          fuelStatus.style.color= "red";
