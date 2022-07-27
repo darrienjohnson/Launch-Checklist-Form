@@ -15,6 +15,11 @@ div {
     align-items: center;
 }
 
+.buttonContainer button{
+    width: 100px;
+    height: 40px;
+}
+
 #launchForm {
     background-color: #ECF0F1;
     text-align: center;

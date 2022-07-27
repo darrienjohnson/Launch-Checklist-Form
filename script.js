@@ -12,14 +12,12 @@ window.addEventListener("load", function(){
    let cargoStatus = document.getElementById('cargoStatus');
    let launchStatus = document.getElementById('launchStatus');
 
+   //button to submit form
+   let submit = document.getElementById('submit');
+
    //button to generate a random planet
    let randomPlanetButton = document.getElementById('planetButton')
    
-   
-   // validate number for fuel level and cargo mass input field
-   function validateNumber(number) {
-      return !isNaN(parseFloat(number) && isFinite(number));
-   }
    
    //Planetary JSON Fetch
    fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response){
@@ -28,70 +26,114 @@ window.addEventListener("load", function(){
          randomPlanetButton.addEventListener("click", ()=>{
             let random = data[Math.floor(Math.random()*data.length)]
             missionTarget.innerHTML = `
-             <h2>Mission Destination</h2>
-             <ul>
-                <li>Name: ${random.name}</li>
-                <li>Diameter: ${random.diameter}</li>
-                <li>Star: ${random.star}</li>
-                <li>Distance: ${random.distance}</li>
-                <li>Number of Moons: ${random.moons}</li>
-             </ul>
-             <img src="${random.image}">
+            <h2>Mission Destination</h2>
+            <ul>
+            <li>Name: ${random.name}</li>
+            <li>Diameter: ${random.diameter}</li>
+            <li>Star: ${random.star}</li>
+            <li>Distance: ${random.distance}</li>
+            <li>Number of Moons: ${random.moons}</li>
+            </ul>
+            <img src="${random.image}">
             `
-     });    
-    });
-  });
-
-
-  form.addEventListener("submit", (event) => {
-
-   //alert for incase input field is left empty
-    if(pilotInput.value === ''|| copilotInput.value === '' || fuelLevelInput.value === ''|| cargoMassInput.value === ''){
-       alert("All fields are required!")
-       event.preventDefault();
-
-   //alert for incase input field for fuel level is not a number
-
-    }else if(!validateNumber(fuelLevelInput.value)){
-       alert("Fuel Level must be a number")
-       event.preventDefault();
-
-   //alert for incase input field for fuel level is not a number
-
-    }else if(!validateNumber(cargoMassInput.value)){
-       alert("Cargo Mass must be a number")
-       event.preventDefault();
-    }  
-
-      pilotStatus.innerHTML = `${pilotInput.value} is ready for launch`
-      copilotStatus.innerHTML = `${copilotInput.value} is ready for launch`
-    //If shuttle fuel too low display a red warning
-      if(fuelLevelInput.value < 10000){
-         fuelStatus.style.color= "red";
-         launchStatus.style.color= "red";
-         fuelStatus.innerHTML = `NOT ENOUGH FUEL FOR SHUTTLE TO TAKE OFF!`;
-         launchStatus.innerHTML = `Shuttle not ready for launch`
-      }else {fuelStatus.innerHTML = `Fuel Level Check: Passed`;
-      fuelStatus.style.color = "inherit"
-      }
-   //if shuttle mass too heavy display a red warning
-      if(cargoMassInput.value > 10000){
-         cargoStatus.style.color= "red";
-         launchStatus.style.color= "red";
-         cargoStatus.innerHTML = `TOO MUCH MASS FOR SHUTTLE TO TAKE OFF!`;
-         launchStatus.innerHTML = `Shuttle not ready for launch`
-      }else {cargoStatus.innerHTML = `Cargo Mass Check: Passed`;
-      cargoStatus.style.color = "inherit"
-   //if shuttle fuel and mass level are correct range ready for launch  
-      if(fuelLevelInput.value > 10000 && cargoMassInput.value < 10000){
-         
-         launchStatus.innerHTML = `Shuttle is ready for launch`
-         launchStatus.style.color = "green"}
-      }
-      
-         
-   event.preventDefault();
+         });    
+      });
+   }); //End of Data Fetch
    
+   
+   
+   //Function to Validate inputs of form
+   function validateForm(){
+      submit.addEventListener("click", ()=>{
          
-   });
-});
+         let pilotInputValue = String(pilotInput.value)
+         let pilotInputCheck;
+
+         let copilotInputValue = String(copilotInput.value)
+         let copilotInputCheck;
+ 
+         let fuelLevelInputValue = parseFloat(fuelLevelInput.value)
+         let fuelLevelInputCheck;
+
+         let cargoMassInputValue = parseFloat(cargoMassInput.value)
+         let cargoMassInputCheck;
+  
+         //Emput Field Check
+         if(pilotInputValue === "" || copilotInputValue === "" || fuelLevelInputValue === "" || cargoMassInputValue === ""){
+            alert("All fields are require")
+         }
+         //Pilot input Check
+         if(!isNaN(pilotInputValue) || pilotInputValue === "" ){
+            alert("Please enter the pilot's name. ")
+            pilotInputCheck = false;
+         }else{
+            pilotInputCheck = true;
+            pilotStatus.innerHTML = `${pilotInput.value} is ready for launch`
+         }
+         //Copilot input Check
+         if(!isNaN(copilotInputValue) || copilotInputValue === "" ){
+            alert("Please enter the copilot's name.")
+            copilotInputCheck = false;
+         }else{
+            copilotInputCheck = true;
+            copilotStatus.innerHTML = `${copilotInput.value} is ready for launch`
+         }
+         
+         
+         if(fuelLevelInputValue === "" ){
+            alert("Please enter a number for fuel.")
+            fuelLevelInputCheck = false;
+         }else if(isNaN(fuelLevelInputValue)){
+            alert("Please enter a number for fuel.")
+            fuelStatus.innerHTML = ` `;
+            fuelLevelInputCheck = false;
+         }else if(fuelLevelInput.value < 10000){
+            fuelStatus.innerHTML = `NOT ENOUGH FUEL FOR SHUTTLE TO TAKE OFF!`;
+            launchStatus.innerHTML = `Shuttle not ready for launch`
+         }else{
+            fuelStatus.innerHTML = `Fuel Level Check: Passed`;
+            fuelLevelInputCheck = true
+         }
+
+
+         if(cargoMassInputValue === "" ){
+            alert("Please enter a number for cargo mass.")
+            cargoMassInputCheck = false
+         } else if(isNaN(cargoMassInputValue)){
+            alert("Please enter a number for fuel.")
+            cargoStatus.innerHTML = ` `;
+            cargoMassInputCheck = false;
+         }else if(cargoMassInput.value > 10000 || cargoMassInput.value < 0){
+            cargoStatus.innerHTML = `TOO MUCH MASS FOR SHUTTLE TO TAKE OFF!`;
+            launchStatus.innerHTML = `Shuttle not ready for launch`
+         }else{
+            cargoStatus.innerHTML = `Cargo Mass Check: Passed`;
+            cargoMassInputCheck = true
+         }
+         
+         if(pilotInputCheck === true && copilotInputCheck === true && fuelLevelInputCheck === true && cargoMassInputCheck === true){
+         launchStatus.innerHTML = `Shuttle is ready for launch`
+         launchStatus.style.color = "green"
+         }else{
+            launchStatus.innerHTML = `Shuttle is not ready for launch` 
+            launchStatus.style.color = "red"
+         }
+
+      });//End of Submit button event
+      
+      
+   }//End of Function to validate input
+   
+   //Form Submit
+   form.addEventListener("submit", (event) => {
+      
+      validateForm()
+      event.preventDefault();
+      
+   });//End of Submit Form
+   
+   
+   
+   
+   
+});//End of Event Load Function
