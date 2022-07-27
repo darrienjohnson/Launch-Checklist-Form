@@ -1,11 +1,3 @@
-/*
-1.Validate the user response with preventDefault()
-2. With validation, update a list of what is currently ready or notready for the shuttle launch
-3. Indicate what is good or bad about the shuttle and whether it is ready for launch by using 
-the DOM to update CSS styles.
-4.Fetch some planetary JSON to update the mission destination with vital facts and figures 
-about where the shuttle is headed.
-*/
 window.addEventListener("load", function(){
    let form = document.getElementById("launchForm");
 
@@ -25,6 +17,24 @@ window.addEventListener("load", function(){
    function validateNumber(number) {
       return !isNaN(parseFloat(number) && isFinite(number));
   }
+
+//Planetary JSON Fetch
+fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response){
+    response.json().then(function(data){
+        const missionTarget = document.getElementById("missionTarget");
+        missionTarget.innerHTML = `
+         <h2>Mission Destination</h2>
+         <ul>
+            <li>Name: ${data[0].name}</li>
+            <li>Diameter: ${data[0].diameter}</li>
+            <li>Star: ${data[0].star}</li>
+            <li>Distance: ${data[0].distance}</li>
+            <li>Number of Moons: ${data[0].moons}</li>
+         </ul>
+         <img src="${data[0].image}">
+        `
+    });    
+    });
 
 
   form.addEventListener("submit", (event) => {
@@ -79,22 +89,3 @@ window.addEventListener("load", function(){
          
    });
 });
-
-
-
-
-
-
-// Write your JavaScript code here!
-
-/* This block of code shows how to format the HTML once you fetch some planetary JSON!
-<h2>Mission Destination</h2>
-<ul>
-   <li>Name: ${}</li>
-   <li>Diameter: ${}</li>
-   <li>Star: ${}</li>
-   <li>Distance from Earth: ${}</li>
-   <li>Number of Moons: ${}</li>
-</ul>
-<img src="${}">
-*/
