@@ -44,7 +44,7 @@ window.addEventListener("load", function(){
    
    //Function to Validate inputs of form
    function validateForm(){
-      submit.addEventListener("click", ()=>{
+      
          
          let pilotInputValue = String(pilotInput.value)
          let pilotInputCheck;
@@ -100,7 +100,7 @@ window.addEventListener("load", function(){
             alert("Please enter a number for cargo mass.")
             cargoMassInputCheck = false
          } else if(isNaN(cargoMassInputValue)){
-            alert("Please enter a number for fuel.")
+            alert("Please enter a number cargo mass.")
             cargoStatus.innerHTML = ` `;
             cargoMassInputCheck = false;
          }else if(cargoMassInput.value > 10000 || cargoMassInput.value < 0){
@@ -119,9 +119,6 @@ window.addEventListener("load", function(){
             launchStatus.style.color = "red"
          }
 
-      });//End of Submit button event
-      
-      
    }//End of Function to validate input
    
    //Form Submit
