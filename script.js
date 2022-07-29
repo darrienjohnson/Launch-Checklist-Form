@@ -88,6 +88,7 @@ window.addEventListener("load", function(){
             alert("Please enter the pilot's name. ")
             return
          }
+         
          //Copilot input Check
          if(!isNaN(copilotInputValue)){
             alert("Please enter the copilot's name.")
@@ -117,11 +118,11 @@ window.addEventListener("load", function(){
             cargoCheck = true;
             cargoStatus.innerHTML = `Cargo Mass Check: Passed`;
          }
+         
+         pilotStatus.innerHTML = `${pilotInput.value} is ready for launch`
+         copilotStatus.innerHTML = `${copilotInput.value} is ready for launch`
 
          if(fuelCheck && cargoCheck){
-            // pilotStatus.innerHTML = `${pilotInput.value} is ready for launch`
-            pilotStatus.innerHTML = pilotInput.value
-            copilotStatus.innerHTML = `${copilotInput.value} is ready for launch`
             launchStatus.style.color = "green"
             launchStatus.innerHTML = `Shuttle is ready for launch`
          }else{
