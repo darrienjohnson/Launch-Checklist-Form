@@ -23,7 +23,6 @@ window.addEventListener("load", function(){
    fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response){
       response.json().then(function(data){
          const missionTarget = document.getElementById("missionTarget");
-         randomPlanetButton.addEventListener("click", ()=>{
             let random = data[Math.floor(Math.random()*data.length)]
             missionTarget.innerHTML = `
             <h2>Mission Destination</h2>
@@ -36,9 +35,30 @@ window.addEventListener("load", function(){
             </ul>
             <img src="${random.image}">
             `
-         });    
-      });
+      }); //End of then function
    }); //End of Data Fetch
+
+   //Potential Bonus Refresh Button
+   // //Planetary JSON Fetch
+   // fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response){
+   //    response.json().then(function(data){
+   //       const missionTarget = document.getElementById("missionTarget");
+   //       randomPlanetButton.addEventListener("click", ()=>{
+   //          let random = data[Math.floor(Math.random()*data.length)]
+   //          missionTarget.innerHTML = `
+   //          <h2>Mission Destination</h2>
+   //          <ul>
+   //          <li>Name: ${random.name}</li>
+   //          <li>Diameter: ${random.diameter}</li>
+   //          <li>Star: ${random.star}</li>
+   //          <li>Distance: ${random.distance}</li>
+   //          <li>Number of Moons: ${random.moons}</li>
+   //          </ul>
+   //          <img src="${random.image}">
+   //          `
+   //       });    
+   //    });
+   // }); //End of Data Fetch
    
    
    
@@ -68,7 +88,7 @@ window.addEventListener("load", function(){
             pilotInputCheck = false;
          }else{
             pilotInputCheck = true;
-            pilotStatus.innerHTML = `${pilotInput.value} is ready for launch`
+            // pilotStatus.innerHTML = `${pilotInput.value} is ready for launch`
          }
          //Copilot input Check
          if(!isNaN(copilotInputValue) || copilotInputValue === "" ){
@@ -76,7 +96,7 @@ window.addEventListener("load", function(){
             copilotInputCheck = false;
          }else{
             copilotInputCheck = true;
-            copilotStatus.innerHTML = `${copilotInput.value} is ready for launch`
+            // copilotStatus.innerHTML = `${copilotInput.value} is ready for launch`
          }
          
          
@@ -88,10 +108,10 @@ window.addEventListener("load", function(){
             fuelStatus.innerHTML = ` `;
             fuelLevelInputCheck = false;
          }else if(fuelLevelInput.value < 10000){
-            fuelStatus.innerHTML = `NOT ENOUGH FUEL FOR SHUTTLE TO TAKE OFF!`;
+            alert(`NOT ENOUGH FUEL FOR SHUTTLE TO TAKE OFF!`);
             launchStatus.innerHTML = `Shuttle not ready for launch`
          }else{
-            fuelStatus.innerHTML = `Fuel Level Check: Passed`;
+            // fuelStatus.innerHTML = `Fuel Level Check: Passed`;
             fuelLevelInputCheck = true
          }
 
@@ -104,17 +124,25 @@ window.addEventListener("load", function(){
             cargoStatus.innerHTML = ` `;
             cargoMassInputCheck = false;
          }else if(cargoMassInput.value > 10000 || cargoMassInput.value < 0){
-            cargoStatus.innerHTML = `TOO MUCH MASS FOR SHUTTLE TO TAKE OFF!`;
+            alert(`TOO MUCH MASS FOR SHUTTLE TO TAKE OFF!`);
             launchStatus.innerHTML = `Shuttle not ready for launch`
          }else{
-            cargoStatus.innerHTML = `Cargo Mass Check: Passed`;
+            // cargoStatus.innerHTML = `Cargo Mass Check: Passed`;
             cargoMassInputCheck = true
          }
          
          if(pilotInputCheck === true && copilotInputCheck === true && fuelLevelInputCheck === true && cargoMassInputCheck === true){
+         pilotStatus.innerHTML = `${pilotInput.value} is ready for launch`
+         copilotStatus.innerHTML = `${copilotInput.value} is ready for launch`
+         fuelStatus.innerHTML = `Fuel Level Check: Passed`;
+         cargoStatus.innerHTML = `Cargo Mass Check: Passed`;
          launchStatus.innerHTML = `Shuttle is ready for launch`
          launchStatus.style.color = "green"
          }else{
+            pilotStatus.innerHTML = ``
+         copilotStatus.innerHTML = ``
+         fuelStatus.innerHTML = ``;
+         cargoStatus.innerHTML = ``;
             launchStatus.innerHTML = `Shuttle is not ready for launch` 
             launchStatus.style.color = "red"
          }

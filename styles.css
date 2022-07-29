@@ -60,6 +60,7 @@ button {
     width: 25%;
     height: 30px;
     margin: 10px 0;
+    cursor: pointer;
 }
 
 .form-group {
