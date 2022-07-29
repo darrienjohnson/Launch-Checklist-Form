@@ -7,7 +7,7 @@ div {
 }
 
 #itemStatus {
-    visibility: visible;   
+    visibility: hidden;   
 }
 .buttonContainer{
     display: flex;
