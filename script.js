@@ -77,12 +77,21 @@ window.addEventListener("load", function(){
 
          let fuelCheck = false;
          let cargoCheck = false;
+
+         function invaidInput(){
+            itemStatus.style.visibility= "hidden"
+            launchStatus.style.color = "black"
+            launchStatus.innerHTML = `Awaiting Information Before Launch`
+         }
+
   
          //Emput Field Check
          if(pilotInputValue === "" || copilotInputValue === "" || fuelLevelInputValue === "" || cargoMassInputValue === ""){
             alert("All fields are require")
+            invaidInput()
             return
          }
+
          //Pilot input Check
          if(!isNaN(pilotInputValue)){
             alert("Please enter the pilot's name. ")
@@ -98,7 +107,9 @@ window.addEventListener("load", function(){
          
          if(isNaN(fuelLevelInputValue)){
             alert("Please enter a number for fuel.")
+            invaidInput()
             return
+
          }else if(fuelLevelInput.value < 10000){
             fuelStatus.innerHTML = `NOT ENOUGH FUEL FOR SHUTTLE TO TAKE OFF!`;
          }else{
@@ -110,7 +121,7 @@ window.addEventListener("load", function(){
          
          if(isNaN(cargoMassInputValue)){
             alert("Please enter a number cargo mass.")
-            
+            invaidInput()
             return
          }else if(cargoMassInput.value > 10000 || cargoMassInput.value < 0){
             cargoStatus.innerHTML = `TOO MUCH MASS FOR SHUTTLE TO TAKE OFF!`;
